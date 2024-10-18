@@ -1,0 +1,8 @@
+Elctron Tutorial: 
+
+-Documentação:
+https://www.electronjs.org/pt/docs/latest/
+
+-Material de apoio: 
+https://www.youtube.com/watch?v=9bNk3OQPKyM&list=PLbEOwbQR9lqybf2ehSR-KWEv_0g-HDJ50
+
