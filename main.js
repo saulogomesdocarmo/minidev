@@ -169,6 +169,10 @@ const template = [
                 click: () => shell.openExternal('https://github.com/saulogomesdocarmo/minidev.git')
             },
             {
+                label:'LinkedIn',
+                click: () => shell.openExternal('https://www.linkedin.com/in/saulo-gomes-do-carmo-74156719a/')
+            },
+            {
                 label: 'Sobre',
                 click: () => aboutWindow()
             }
