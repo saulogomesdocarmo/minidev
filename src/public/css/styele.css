@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+/*Importação de font (off-line)*/
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('../Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf');
+    src: url('../Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf');
+
+}
+
+/*Paleta de cores Monokai*/
+:root {
+    --fundo: #1f1f1f;
+    --branco: #ffffff;
+    --amarelo: #e5e576;
+    --azul: #9cdcfe;
+    --cinzaClaro: #d6d6d6;
+    --cinza: #858585;
+    --laranja: #e87d3e;
+    --pink: #b05279;
+    --roxo: #9e86c8;
+    --verde: #b4d273;
+}
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+/* Sobre */
+#sobre {
+    padding-left: 15px;
+}
+
+#sobre h1,
+p {
+    font-family: 'Source Code Pro';
+}
+
+#sobre h1{
+    font-weight: 500;
+    font-size: 1.25em;
+}
+
+#sobre button{
+    padding: 5px 20px;
+    background-color: var(--cinzaClaro);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#sobre button:hover{
+    background-color: var(--branco);
+}

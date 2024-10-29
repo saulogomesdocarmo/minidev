@@ -3,7 +3,7 @@ console.log("Processo Principal")
 // NativeTheme (forçar um thema no sistema operacional)
 // Menu (criar menu personalizado)
 // shell (acessar links externos)
-const { app, BrowserWindow, nativeTheme, Menu, shell } = require('electron/main')
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
 const path = require('node:path')
 
 // Janela principal
@@ -25,15 +25,35 @@ function createWindow() {
 // Janela Sobre (secundária)
 function aboutWindow() {
     nativeTheme.themeSource = 'dark'
-    const about = new BrowserWindow({
-        width: 360,
-        height: 220,
-        autoHideMenuBar: true, // esconder o menu
-        resizable: false, // impedir o redimensionamento
-        minimizable: false, // impedir minimizar a janela
-        // titleBarStyle: 'hidden' //esconder a barra de estilo (ex: totem de atendimento), 
-    })
+    // A linha abaixo obtem a janela principal
+    const main = BrowserWindow.getFocusedWindow()
+    let about
+    // validar a janela pai
+    if (main) {
+        about = new BrowserWindow({
+            width: 360,
+            height: 220,
+            autoHideMenuBar: true, // esconder o menu
+            resizable: false, // impedir o redimensionamento
+            minimizable: false, // impedir minimizar a janela
+            // titleBarStyle: 'hidden' //esconder a barra de estilo (ex: totem de atendimento), 
+            parent: main, // estabelece uma hierarquia de janela
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
+        })
+    }
     about.loadFile('./src/views/sobre.html')
+    // fechar a janela quando receber mensagem do processo de renderização
+    ipcMain.addListener('close-about', () => {
+        // console.log("Recebi a mensagem close-about")
+        // Validar se a janela foi destruida
+        if (about && !about.isDestroyed()) {
+            about.close()
+        }
+
+    })
 }
 // Execução Assíncrona do aplicativo Electron
 app.whenReady().then(() => {
