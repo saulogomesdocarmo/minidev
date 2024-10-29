@@ -31,8 +31,8 @@ function aboutWindow() {
     // validar a janela pai
     if (main) {
         about = new BrowserWindow({
-            width: 360,
-            height: 220,
+            width: 320,
+            height: 160,
             autoHideMenuBar: true, // esconder o menu
             resizable: false, // impedir o redimensionamento
             minimizable: false, // impedir minimizar a janela

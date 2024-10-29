@@ -30,22 +30,62 @@
     box-sizing: border-box;
 }
 
+/* Janela Principal */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--fundo);
+}
+
+body {
+    padding-top: 10px;
+}
+
 /* Sobre */
 #sobre {
     padding-left: 15px;
+
 }
 
 #sobre h1,
 p {
     font-family: 'Source Code Pro';
+    color: var(--cinzaClaro);
 }
 
-#sobre h1{
+#sobre h1 {
     font-weight: 500;
     font-size: 1.25em;
 }
 
-#sobre button{
+#sobre p {
+    border-right: 2px solid;
+    width: 25ch;
+    /* Efeito de animação */
+    white-space: nowrap;
+    overflow: hidden;
+    /* Executar as funções de animação abaixo */
+    animation: typing 2s steps(29), blink-cursor 0.5s 
+    step-end infinite;
+
+}
+
+/* Funções CSS para animação */
+@keyframes blink-cursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes typing {
+    from{
+        width: 0;
+    }
+}
+
+#sobre button {
     padding: 5px 20px;
     background-color: var(--cinzaClaro);
     position: fixed;
@@ -53,6 +93,6 @@ p {
     right: 20px;
 }
 
-#sobre button:hover{
+#sobre button:hover {
     background-color: var(--branco);
 }
