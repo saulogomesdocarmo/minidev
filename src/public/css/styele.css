@@ -1,18 +1,17 @@
 @charset "UTF-8";
 
-/*Importação de font (off-line)*/
+/* importação de font (off-line) */
 @font-face {
     font-family: 'Source Code Pro';
     src: url('../Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf');
     src: url('../Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf');
-
 }
 
-/*Paleta de cores Monokai*/
+/* Cores paleta monokai */
 :root {
     --fundo: #1f1f1f;
-    --branco: #ffffff;
-    --amarelo: #e5e576;
+    --branco: #fff;
+    --amarelo: #e5b567;
     --azul: #9cdcfe;
     --cinzaClaro: #d6d6d6;
     --cinza: #858585;
@@ -30,28 +29,59 @@
     box-sizing: border-box;
 }
 
-/* Janela Principal */
-
+/* Janela principal */
 html,
 body {
     width: 100%;
     height: 100%;
     background-color: var(--fundo);
+    overflow: hidden;
 }
 
 body {
     padding-top: 10px;
 }
 
+#linhas,
+#txtArea {
+    height: 100%;
+    font-family: "Source Code Pro";
+    font-size: 1.1em;
+    background-color: var(--fundo);
+}
+
+#linhas {
+    width: 8%;
+    /* background-color: var(--amarelo); */
+    float: left;
+    overflow-y: auto; /*Ativa scroll na vertical*/
+    overflow: hidden;
+    text-align: right;
+    padding-right: calc(1% + 7px);
+    color: var(--cinza)
+}
+
+#txtArea {
+    width: 92%;
+    /* background-color: var(--cinzaClaro); */
+    color: var(--cinzaClaro);
+    /* impedir o redimensionamento do campo d etexto txtArea */
+    resize: none;   
+}
+
+#txtArea:focus {
+    /* remover o foco da área de texto */
+    outline: none; 
+}
+
 /* Sobre */
 #sobre {
     padding-left: 15px;
-
 }
 
 #sobre h1,
 p {
-    font-family: 'Source Code Pro';
+    font-family: "Source Code Pro";
     color: var(--cinzaClaro);
 }
 
@@ -62,17 +92,15 @@ p {
 
 #sobre p {
     border-right: 2px solid;
-    width: 25ch;
-    /* Efeito de animação */
+    width: 29ch;
+    /* efeito de animação */
     white-space: nowrap;
     overflow: hidden;
-    /* Executar as funções de animação abaixo */
-    animation: typing 2s steps(29), blink-cursor 0.5s 
-    step-end infinite;
-
+    /* executar as funções de animação abaixo */
+    animation: typing 2s steps(29), blink-cursor 0.5s step-end infinite;
 }
 
-/* Funções CSS para animação */
+/* funções CSS para animação */
 @keyframes blink-cursor {
     50% {
         border-color: transparent;
@@ -80,7 +108,7 @@ p {
 }
 
 @keyframes typing {
-    from{
+    from {
         width: 0;
     }
 }

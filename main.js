@@ -157,27 +157,38 @@ const template = [
         submenu: [
             {
                 label: 'Amarelo',
+                click: () => win.webContents.send("set-color" ,"#e5b567")
             },
             {
                 label: 'Azul',
+                click: () => win.webContents.send("set-color" ,"#9cdcfe")
             },
             {
                 label: 'Laranja',
+                click: () => win.webContents.send("set-color" ,"#e87d3e")
             },
             {
                 label: 'Pink',
+                click: () => win.webContents.send("set-color" ,"#b05279")
             },
             {
                 label: 'Roxo',
+                click: () => win.webContents.send("set-color" ,"#9e86c8")
             },
             {
                 label: 'Verde',
+                click: () => win.webContents.send("set-color" ,"#9cdcfe")
             },
             {
-                type: 'separator'
+                type: 'separator',
+                click: () => win.webContents.send("set-color" ,"#b4d273")
             },
             {
-                label: 'Restaurar a cor padrão'
+                type: 'separator',
+            },
+            {
+                label: 'Restaurar a cor padrão',
+                click: () => win.webContents.send("set-color" ,"#9cdcfe")
             }
         ]
     },
