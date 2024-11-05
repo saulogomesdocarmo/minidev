@@ -80,7 +80,8 @@ const template = [
         submenu: [
             {
                 label: 'Novo',
-                accelerator: 'CmdOrCtrl+N'
+                accelerator: 'CmdOrCtrl+N',
+                click: () => novoArquivo()
             },
             {
                 label: 'Abrir',
@@ -157,38 +158,38 @@ const template = [
         submenu: [
             {
                 label: 'Amarelo',
-                click: () => win.webContents.send("set-color" ,"#e5b567")
+                click: () => win.webContents.send("set-color", "#e5b567")
             },
             {
                 label: 'Azul',
-                click: () => win.webContents.send("set-color" ,"#9cdcfe")
+                click: () => win.webContents.send("set-color", "#9cdcfe")
             },
             {
                 label: 'Laranja',
-                click: () => win.webContents.send("set-color" ,"#e87d3e")
+                click: () => win.webContents.send("set-color", "#e87d3e")
             },
             {
                 label: 'Pink',
-                click: () => win.webContents.send("set-color" ,"#b05279")
+                click: () => win.webContents.send("set-color", "#b05279")
             },
             {
                 label: 'Roxo',
-                click: () => win.webContents.send("set-color" ,"#9e86c8")
+                click: () => win.webContents.send("set-color", "#9e86c8")
             },
             {
                 label: 'Verde',
-                click: () => win.webContents.send("set-color" ,"#9cdcfe")
+                click: () => win.webContents.send("set-color", "#9cdcfe")
             },
             {
                 type: 'separator',
-                click: () => win.webContents.send("set-color" ,"#b4d273")
+                click: () => win.webContents.send("set-color", "#b4d273")
             },
             {
                 type: 'separator',
             },
             {
                 label: 'Restaurar a cor padrão',
-                click: () => win.webContents.send("set-color" ,"#9cdcfe")
+                click: () => win.webContents.send("set-color", "#9cdcfe")
             }
         ]
     },
@@ -200,7 +201,7 @@ const template = [
                 click: () => shell.openExternal('https://github.com/saulogomesdocarmo/minidev.git')
             },
             {
-                label:'LinkedIn',
+                label: 'LinkedIn',
                 click: () => shell.openExternal('https://www.linkedin.com/in/saulo-gomes-do-carmo-74156719a/')
             },
             {
@@ -211,4 +212,22 @@ const template = [
     },
 
 
-] 
+]
+
+// Novo Arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Passo 1: Criar estrutura de dados de um arquivo e setar o título
+// Um arquivo inicia sem título, sem conteúdo, não está salvo e o local padrão vai ser a pasta de documentos.
+function novoArquivo() {
+    file = {
+        name: "Sem título",
+        content: "",
+        saved: false,
+        path: app.getPath('documents') + 'titulo'
+    }
+    // console.log(file)
+    // enviar ao renderizador a estrutura de um novo arquivo e título 
+    win.webContents.send('set-file',file)
+}
+
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

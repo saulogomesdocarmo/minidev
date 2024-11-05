@@ -64,9 +64,17 @@ area.addEventListener('keydown', (event) => {
 })
 
 // Mudar a cor do texto
-api.setColor((event,color) =>{
-    if (area){
+api.setColor((event, color) => {
+    if (area) {
         // trocar cor da fonte  (style - css)
         area.style.color = color
     }
+})
+
+// Novo Arquivo - Carregar a estrutura do arquivo
+api.setFile((event, file) => {
+    area.value = file.content
+    // capturar o ID do título
+    const nomeArquivo = document.getElementById('titulo')
+    nomeArquivo.innerHTML = `${file.name} - Mini Dev Editor`
 })
