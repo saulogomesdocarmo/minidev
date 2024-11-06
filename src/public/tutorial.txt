@@ -22,8 +22,8 @@ src
 |
 |__ Models
 |__ Public
-    |__css --- style.css
-    |__js
-    |__img
-    |__docs
-    |__fonts
+    |__ css --- style.css
+    |__ js
+    |__ img
+    |__ docs
+    |__ fonts

@@ -9,7 +9,8 @@ contextBridge.exposeInMainWorld('api', {
     // A linha abaixo cria uma função que envia uma mensagem ao processo principal
     // send -> enviar
     // on -> receber
-    closeAbout: ()=> ipcRenderer.send('close-about'),
-    setColor: (color) => ipcRenderer.on('set-color',color),
-    setFile: (file)  => ipcRenderer.on('set-file',file),
+    closeAbout: () => ipcRenderer.send('close-about'),
+    setColor: (color) => ipcRenderer.on('set-color', color),
+    setFile: (file) => ipcRenderer.on('set-file', file),
+
 })

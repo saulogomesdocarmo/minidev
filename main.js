@@ -3,8 +3,18 @@ console.log("Processo Principal")
 // NativeTheme (forçar um thema no sistema operacional)
 // Menu (criar menu personalizado)
 // shell (acessar links externos)
-const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain } = require('electron/main')
+// ipcMain ( permite conversar com o renderer - se comunicar com o renderer )
+// dialog (permite usar os recursos do sistema operacional)
+const { app, BrowserWindow, nativeTheme, Menu, shell, ipcMain, dialog } = require('electron/main')
 const path = require('node:path')
+
+// Importação da biblioteca file system (nativa do javascript) para manipular arquivos
+const fs = require('fs')
+
+
+// criação de um objeto com a estrutura básica de um arquivo
+
+let file = {}
 
 // Janela principal
 let win // Importante neste projeto o escopo da variável  win deve ser global
@@ -85,7 +95,8 @@ const template = [
             },
             {
                 label: 'Abrir',
-                accelerator: 'CmdOrCtrl+O'
+                accelerator: 'CmdOrCtrl+O',
+                click: () => abrirArquivo()
             },
             {
                 label: 'Salvar',
@@ -178,7 +189,7 @@ const template = [
             },
             {
                 label: 'Verde',
-                click: () => win.webContents.send("set-color", "#9cdcfe")
+                click: () => win.webContents.send("set-color", "#b4d273")
             },
             {
                 type: 'separator',
@@ -226,8 +237,47 @@ function novoArquivo() {
     }
     // console.log(file)
     // enviar ao renderizador a estrutura de um novo arquivo e título 
+    win.webContents.send('set-file', file)
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+// Abrir arquivo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// 2 funções  -> abrirArquivo() lerArquivo(caminho)
+
+async function abrirArquivo() {
+    // Usar um módulo do Electro para abrir o explorador de arquivos 
+    let dialogFile = await dialog.showOpenDialog({
+        defaultPath: file.path // selecionar o arquivo no local dele 
+    })
+    // console.log(dialogFile)
+    // validação do botão cancelar da caixa de diálogo 
+
+    if (dialogFile.canceled === true) {
+        return false
+    } else {
+        // abrir o arquivo
+        file = {
+            name: path.basename(dialogFile.filePaths[0]),
+            content: lerArquivo(dialogFile.filePaths[0]),
+            saved: true,
+            path: dialogFile[0],
+        }
+    }
+    // console.log(file)
+    // enviar o arquivo para o renderizador
     win.webContents.send('set-file',file)
 }
 
+function lerArquivo(filePath) {
+    // usar o trycatch -> sempre que trabalhar com arquivos.
+    try {
+        // A linha abaixo usa a biblioteca fs para ler um arquivo,informando o caminho e o encoding do arquivo
+        return fs.readFileSync(filePath, 'utf-8')
+    } catch (error) {
+        console.log(error)
+        return ''
+    }
+}
 
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
