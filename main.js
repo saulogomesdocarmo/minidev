@@ -10,6 +10,7 @@ const path = require('node:path')
 
 // Importação da biblioteca file system (nativa do javascript) para manipular arquivos
 const fs = require('fs')
+const { error } = require('node:console')
 
 
 // criação de um objeto com a estrutura básica de um arquivo
@@ -100,11 +101,13 @@ const template = [
             },
             {
                 label: 'Salvar',
-                accelerator: 'CmdOrCtrl+S'
+                accelerator: 'CmdOrCtrl+S',
+                click: () => salvar()
             },
             {
                 label: 'Salvar Como',
-                accelerator: 'CmdOrCtrl+Shift+S'
+                accelerator: 'CmdOrCtrl+Shift+S',
+                click: () => salvarComo()
             },
             {
                 type: 'separator'
@@ -265,7 +268,7 @@ async function abrirArquivo() {
     }
     // console.log(file)
     // enviar o arquivo para o renderizador
-    win.webContents.send('set-file',file)
+    win.webContents.send('set-file', file)
 }
 
 function lerArquivo(filePath) {
@@ -279,5 +282,47 @@ function lerArquivo(filePath) {
     }
 }
 
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+// Salvar e Salvar como >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// 3 Funções 1 -> Salvar como 2 -> Salvar 3 -> Salvar arquivo
+
+async function salvarComo() {
+    let dialogFile = await dialog.showSaveDialog({
+        defaultPath: file.path
+
+    })
+    // console.log(dialogFile)
+    if (dialogFile.canceled === true) {
+        return false
+    } else {
+        salvarArquivo(dialogFile.filePath)
+    }
+}
+
+function salvar() {
+    if (file.saved === true) {
+        return salvarArquivo(file.path)
+    } else {
+        return salvarComo()
+    }
+}
+
+function salvarArquivo(filePath) {
+    console.log(filePath)
+    try {
+        // uso da biblioteca para gravar um arquivo
+        fs.write(filePath, file.content, (error) => {
+            file.path = filePath
+            file.saved = true
+            file.name = path.basename(filePath)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
