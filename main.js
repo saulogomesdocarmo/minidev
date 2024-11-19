@@ -10,8 +10,6 @@ const path = require('node:path')
 
 // Importação da biblioteca file system (nativa do javascript) para manipular arquivos
 const fs = require('fs')
-const { error } = require('node:console')
-
 
 // criação de um objeto com a estrutura básica de um arquivo
 
@@ -263,7 +261,7 @@ async function abrirArquivo() {
             name: path.basename(dialogFile.filePaths[0]),
             content: lerArquivo(dialogFile.filePaths[0]),
             saved: true,
-            path: dialogFile[0],
+            path: dialogFile.filePaths[0],
         }
     }
     // console.log(file)
@@ -312,17 +310,24 @@ function salvar() {
 }
 
 function salvarArquivo(filePath) {
-    console.log(filePath)
+    console.log(file)
     try {
         // uso da biblioteca para gravar um arquivo
-        fs.write(filePath, file.content, (error) => {
+        fs.writeFile(filePath, file.content, (error) => {
             file.path = filePath
             file.saved = true
             file.name = path.basename(filePath)
+            // Alterar o título ao salvar o arquivo
+            win.webContents.send('set-file', file)
         })
     } catch (error) {
         console.log(error)
     }
 }
 
+ipcMain.on('update-content', (event, value) => {
+    file.content = value
+})
+
+// Atualização em tempo real do conteúdo objet fil
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

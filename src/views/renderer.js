@@ -82,3 +82,8 @@ api.setFile((event, file) => {
     atualizarLinhas()
 })
 
+// Atualição de conteúdo (obejto file) em tempo real
+function update() { 
+    api.atualizarConteudo(area.value)
+}
+
